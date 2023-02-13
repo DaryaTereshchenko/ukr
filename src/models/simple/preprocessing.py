@@ -4,6 +4,9 @@ import re
 import unicodedata
 import tokenize_uk
 import os
+import matplotlib.pyplot as plt
+from pathlib import Path
+from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
 
 def get_path(path):
     """
@@ -63,3 +66,23 @@ def write_to_file(data, path):
         with open(path, + str(text[0]) + ".txt", "w", encoding="utf-8") as f:
             f.write("".join(text[1]))
             f.close
+
+
+def plot_cm(y_true, y_pred, labels, normalize=None,
+    save=False,
+    directory=None,
+    filename=None,
+    title="",
+    cmap=plt.cm.Blues,
+):
+    cm = confusion_matrix(y_true, y_pred, normalize=normalize)
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=labels)
+    disp.plot(cmap=cmap)
+    plt.title(title)
+    if save:
+        directory = Path(directory)
+        directory.mkdir(parents=True, exist_ok=True)
+        plt.savefig(directory / filename)
+        plt.close()
+    else:
+        plt.show()
