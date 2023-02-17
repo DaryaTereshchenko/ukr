@@ -1,4 +1,0 @@
-{
-    "search.useParentIgnoreFiles": true,
-    "python.envFile": "${workspaceFolder}/.env"
-}
